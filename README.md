@@ -103,32 +103,38 @@ The use of the term `n-1` is commonly referred to as Bessel's correction. Note, 
 
 <!-- /.intro -->
 
-<section class="installation">
 
-## Installation
-
-```bash
-npm install @stdlib/stats-base-sstdevch
-```
-
-Alternatively,
-
--   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
--   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
--   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
-
-The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
-
-To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
-
-</section>
 
 <section class="usage">
 
 ## Usage
 
+To use in Observable,
+
 ```javascript
-var sstdevch = require( '@stdlib/stats-base-sstdevch' );
+sstdevch = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/stats-base-sstdevch@umd/browser.js' )
+```
+
+To vendor stdlib functionality and avoid installing dependency trees for Node.js, you can use the UMD server build:
+
+```javascript
+var sstdevch = require( 'path/to/vendor/umd/stats-base-sstdevch/index.js' )
+```
+
+To include the bundle in a webpage,
+
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/stats-base-sstdevch@umd/browser.js"></script>
+```
+
+If no recognized module system is present, access bundle contents via the global scope:
+
+```html
+<script type="text/javascript">
+(function () {
+    window.sstdevch;
+})();
+</script>
 ```
 
 #### sstdevch( N, correction, x, strideX )
@@ -226,9 +232,14 @@ var v = sstdevch.ndarray( 4, 1, x, 2, 1 );
 
 <!-- eslint no-undef: "error" -->
 
-```javascript
-var discreteUniform = require( '@stdlib/random-array-discrete-uniform' );
-var sstdevch = require( '@stdlib/stats-base-sstdevch' );
+```html
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/random-array-discrete-uniform@umd/browser.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/stats-base-sstdevch@umd/browser.js"></script>
+<script type="text/javascript">
+(function () {
 
 var x = discreteUniform( 10, -50, 50, {
     'dtype': 'float32'
@@ -237,6 +248,11 @@ console.log( x );
 
 var v = sstdevch( x.length, 1, x, 1 );
 console.log( v );
+
+})();
+</script>
+</body>
+</html>
 ```
 
 </section>
@@ -245,122 +261,7 @@ console.log( v );
 
 <!-- C interface documentation. -->
 
-* * *
 
-<section class="c">
-
-## C APIs
-
-<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
-
-<section class="intro">
-
-</section>
-
-<!-- /.intro -->
-
-<!-- C usage documentation. -->
-
-<section class="usage">
-
-### Usage
-
-```c
-#include "stdlib/stats/base/sstdevch.h"
-```
-
-#### stdlib_strided_sstdevch( N, correction, \*X, strideX )
-
-Computes the [standard deviation][standard-deviation] of a single-precision floating-point strided array using a one-pass trial mean algorithm.
-
-```c
-const float x[] = { 1.0f, -2.0f, 2.0f };
-
-float v = stdlib_strided_sstdevch( 3, 1.0f, x, 1 );
-// returns ~2.0817f
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **correction**: `[in] float` degrees of freedom adjustment. Setting this parameter to a value other than `0` has the effect of adjusting the divisor during the calculation of the [standard deviation][standard-deviation] according to `N-c` where `c` corresponds to the provided degrees of freedom adjustment. When computing the [standard deviation][standard-deviation] of a population, setting this parameter to `0` is the standard choice (i.e., the provided array contains data constituting an entire population). When computing the corrected sample [standard deviation][standard-deviation], setting this parameter to `1` is the standard choice (i.e., the provided array contains data sampled from a larger population; this is commonly referred to as Bessel's correction).
--   **X**: `[in] float*` input array.
--   **strideX**: `[in] CBLAS_INT` stride length for `X`.
-
-```c
-float stdlib_strided_sstdevch( const CBLAS_INT N, const float correction, const float *X, const CBLAS_INT strideX );
-```
-
-#### stdlib_strided_sstdevch_ndarray( N, correction, \*X, strideX, offsetX )
-
-Computes the [standard deviation][standard-deviation] of a single-precision floating-point strided array using a one-pass trial mean algorithm and alternative indexing semantics.
-
-```c
-const float x[] = { 1.0f, -2.0f, 2.0f };
-
-float v = stdlib_strided_sstdevch_ndarray( 3, 1.0f, x, 1, 0 );
-// returns ~2.0817f
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **correction**: `[in] float` degrees of freedom adjustment. Setting this parameter to a value other than `0` has the effect of adjusting the divisor during the calculation of the [standard deviation][standard-deviation] according to `N-c` where `c` corresponds to the provided degrees of freedom adjustment. When computing the [standard deviation][standard-deviation] of a population, setting this parameter to `0` is the standard choice (i.e., the provided array contains data constituting an entire population). When computing the corrected sample [standard deviation][standard-deviation], setting this parameter to `1` is the standard choice (i.e., the provided array contains data sampled from a larger population; this is commonly referred to as Bessel's correction).
--   **X**: `[in] float*` input array.
--   **strideX**: `[in] CBLAS_INT` stride length for `X`.
--   **offsetX**: `[in] CBLAS_INT` starting index for `X`.
-
-```c
-float stdlib_strided_sstdevch_ndarray( const CBLAS_INT N, const float correction, const float *X, const CBLAS_INT strideX, const CBLAS_INT offsetX );
-```
-
-</section>
-
-<!-- /.usage -->
-
-<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
-
-<section class="notes">
-
-</section>
-
-<!-- /.notes -->
-
-<!-- C API usage examples. -->
-
-<section class="examples">
-
-### Examples
-
-```c
-#include "stdlib/stats/base/sstdevch.h"
-#include <stdio.h>
-
-int main( void ) {
-    // Create a strided array:
-    const float x[] = { 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f };
-
-    // Specify the number of elements:
-    const int N = 4;
-
-    // Specify the stride length:
-    const int strideX = 2;
-
-    // Compute the variance:
-    float v = stdlib_strided_sstdevch( N, 1.0f, x, strideX );
-
-    // Print the result:
-    printf( "sample standard deviation: %f\n", v );
-}
-```
-
-</section>
-
-<!-- /.examples -->
-
-</section>
-
-<!-- /.c -->
 
 * * *
 
@@ -469,7 +370,7 @@ Copyright &copy; 2016-2025. The Stdlib [Authors][stdlib-authors].
 
 [standard-deviation]: https://en.wikipedia.org/wiki/Standard_deviation
 
-[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32
+[@stdlib/array/float32]: https://github.com/stdlib-js/array-float32/tree/umd
 
 [mdn-typed-array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
@@ -483,15 +384,15 @@ Copyright &copy; 2016-2025. The Stdlib [Authors][stdlib-authors].
 
 <!-- <related-links> -->
 
-[@stdlib/stats/base/dstdevch]: https://github.com/stdlib-js/stats-base-dstdevch
+[@stdlib/stats/base/dstdevch]: https://github.com/stdlib-js/stats-base-dstdevch/tree/umd
 
-[@stdlib/stats/base/snanstdevch]: https://github.com/stdlib-js/stats-base-snanstdevch
+[@stdlib/stats/base/snanstdevch]: https://github.com/stdlib-js/stats-base-snanstdevch/tree/umd
 
-[@stdlib/stats/base/sstdev]: https://github.com/stdlib-js/stats-base-sstdev
+[@stdlib/stats/base/sstdev]: https://github.com/stdlib-js/stats-base-sstdev/tree/umd
 
-[@stdlib/stats/base/stdevch]: https://github.com/stdlib-js/stats-base-stdevch
+[@stdlib/stats/base/stdevch]: https://github.com/stdlib-js/stats-base-stdevch/tree/umd
 
-[@stdlib/stats/base/svariancech]: https://github.com/stdlib-js/stats-base-svariancech
+[@stdlib/stats/base/svariancech]: https://github.com/stdlib-js/stats-base-svariancech/tree/umd
 
 <!-- </related-links> -->
 
