@@ -4,7 +4,7 @@
 
 <section class="release" id="unreleased">
 
-## Unreleased (2025-03-17)
+## Unreleased (2025-03-29)
 
 <section class="features">
 
@@ -34,6 +34,7 @@ A total of 3 issues were closed in this release:
 
 <details>
 
+-   [`17c4e41`](https://github.com/stdlib-js/stdlib/commit/17c4e41ad480a465b085afa0de85e34957861710) - **refactor:** update paths _(by Aayush Khanna)_
 -   [`b00d9f1`](https://github.com/stdlib-js/stdlib/commit/b00d9f1064701187f48a05b9753e74ae835b0726) - **docs:** fix typing error in `repl.txt` of `stats/base/*` [(#4750)](https://github.com/stdlib-js/stdlib/pull/4750) _(by Aayush Khanna)_
 -   [`82d6dde`](https://github.com/stdlib-js/stdlib/commit/82d6dde1b4b7a6aacc421b99e904ed3931218ce6) - **feat:** add C ndarray interface and refactor implementation for `stats/base/sstdevch` [(#4682)](https://github.com/stdlib-js/stdlib/pull/4682) _(by Aayush Khanna)_
 -   [`10cfaa0`](https://github.com/stdlib-js/stdlib/commit/10cfaa0bd17becbc06cdde6ee27c69e702e2ab36) - **refactor:** update `stats/base/sstdevch` native addon from C++ to C [(#4508)](https://github.com/stdlib-js/stdlib/pull/4508) _(by Dhruv Arvind Singh)_
